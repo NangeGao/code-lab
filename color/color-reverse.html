@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>Color Reverse</title>
+    <style>
+      html, body {
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        font-size: 14px;
+      }
+      #root {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .cell {
+        width: 120px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+      const genRandomNum = (max) => Math.floor(Math.random() * max);
+      const gen256 = () => genRandomNum(256);
+
+      const genRandomColorPair = () => {
+        const origin = Array(3).fill().map(_ => gen256());
+        const inverseOrigin = origin.map(n => 255 - n);
+        const color = `rgb(${origin.join(', ')})`;
+        const oppositeColor = `rgb(${inverseOrigin.join(', ')})`;
+        const isDark = origin.reduce((a, b) => a + b) * 2 < 255 * 3;
+        return [color, oppositeColor, isDark];
+      }
+
+      genRandomColorPair();
+
+      const cells = Array(100).fill().map(() => {
+        const [color, oppositeColor, isDark] = genRandomColorPair();
+        // 文字颜色是背景颜色的反色
+        // return `<div class="cell" style="background: ${color}; color: ${oppositeColor}">${color}</div>`;
+
+        // 只设置深色和浅色背景，对应白色和黑色文字
+        return `<div class="cell" style="background: ${color}; color: ${isDark ? '#fff' : '#000'}">${color}</div>`;
+      })
+      $("#root").html(cells.join(""));
+    </script>
+  </body>
+</html>
