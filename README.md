@@ -1,3 +1,3 @@
 # Code Lab
 
-Some code test
+Some code tests
