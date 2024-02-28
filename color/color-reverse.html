@@ -36,9 +36,11 @@
         const origin = Array(3).fill().map(_ => gen256());
         const inverseOrigin = origin.map(n => 255 - n);
         const color = `rgb(${origin.join(', ')})`;
+        const hexColor = `#${origin.map(n => n.toString(16).padStart(2, '0')).join('')}`.toUpperCase();
         const oppositeColor = `rgb(${inverseOrigin.join(', ')})`;
         const isDark = origin.reduce((a, b) => a + b) * 2 < 255 * 3;
-        return [color, oppositeColor, isDark];
+        console.log(origin, inverseOrigin, color, hexColor, oppositeColor, isDark);
+        return [hexColor, oppositeColor, isDark];
       }
 
       genRandomColorPair();
